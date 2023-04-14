@@ -13,9 +13,3 @@ public class DemoApplication {
 	}
 
 }
-
-@Data
-class Article {
-	int id;
-	String title;
-}
