@@ -24,7 +24,12 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public Article doAdd(String title, String body) {
-		return articleService.writeArticle(title, body);
+		
+		articleService.writeArticle(title, body);
+		
+		int id = articleService.getLastInsertId();
+		
+		return articleService.getArticleById(id);
 	}
 	
 	@RequestMapping("/usr/article/getArticle")
@@ -76,5 +81,3 @@ public class UsrArticleController {
 		return id + "번 게시물을 삭제했습니다";
 	}
 }
-	
-
