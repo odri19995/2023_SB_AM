@@ -7,4 +7,4 @@ spring:
     username: root
     password: 
 mybatis:
-  type-aliases-package: com.koreaIT.demo.vo
+  type-aliases-package: com.KoreaIT.demo.vo

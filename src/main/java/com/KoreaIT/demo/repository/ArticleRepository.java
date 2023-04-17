@@ -13,7 +13,7 @@ public interface ArticleRepository {
 
 	// 서비스 메서드
 
-	public Article writeArticle(String title, String body);
+	public void writeArticle(String title, String body);
 	
 	public int getLastInsertId();
 
