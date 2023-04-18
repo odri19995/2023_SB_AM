@@ -16,12 +16,21 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	public void joinMember(String loginId, String loginPw, String name,String nickname, String cellphoneNum, String email) {
-		memberRepository.joinMember(loginId, loginPw, name,nickname, cellphoneNum, email);
+	public int joinMember(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+
+		Member existsMember = getMemberByLoginId(loginId);
+		
+		if (existsMember != null) {
+			return -1;
+		}
+		
+		memberRepository.joinMember(loginId, loginPw, name, nickname, cellphoneNum, email);
+		
+		return memberRepository.getLastInsertId();
 	}
 	
-	public int getLastInsertId() {
-		return memberRepository.getLastInsertId();
+	private Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
 	}
 
 	public Member getMemberById(int id) {

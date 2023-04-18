@@ -1,0 +1,4 @@
+dependency 관련 에러가 떴을때
+
+xml과 repository 내 @insert 쿼리와 충돌이 일어나서 그러는 것이기 때문에 
+Xml을 안써서 주석처리를 해도 충돌이 일어났다. 
