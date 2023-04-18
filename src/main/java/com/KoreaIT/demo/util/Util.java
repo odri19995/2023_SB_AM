@@ -10,5 +10,7 @@ public class Util {
 		String str = (String) obj;
 		return str.trim().length() == 0;
 	}
+	
+
 
 }
