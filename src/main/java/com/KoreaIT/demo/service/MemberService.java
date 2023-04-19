@@ -18,7 +18,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	public ResultData joinMember(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public ResultData<Integer> joinMember(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 
 		Member existsMember = getMemberByLoginId(loginId);
 		Member existsNickname = getMemberByNickname(nickname);
