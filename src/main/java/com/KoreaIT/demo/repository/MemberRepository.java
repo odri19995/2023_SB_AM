@@ -10,10 +10,7 @@ import com.KoreaIT.demo.vo.Member;
 
 @Mapper
 public interface MemberRepository {
-
-
-
-	// 서비스 메서드
+	
 	@Insert("""
 			INSERT INTO `member`
 				SET regDate = NOW(),
@@ -25,8 +22,7 @@ public interface MemberRepository {
 					cellphoneNum = #{cellphoneNum},
 					email = #{email}
 			""")
-	public void joinMember(String loginId, String loginPw, String name,String nickname, String cellphoneNum, String email);
-
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
 	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
@@ -44,14 +40,14 @@ public interface MemberRepository {
 				WHERE loginId = #{loginId}
 			""")
 	public Member getMemberByLoginId(String loginId);
-	
+
 	@Select("""
 			SELECT *
 				FROM `member`
 				WHERE nickname = #{nickname}
 			""")
 	public Member getMemberByNickname(String nickname);
-	
+
 	@Select("""
 			SELECT *
 				FROM `member`
@@ -59,4 +55,5 @@ public interface MemberRepository {
 				AND email = #{email}
 			""")
 	public Member getMemberByNameAndEmail(String name, String email);
+
 }

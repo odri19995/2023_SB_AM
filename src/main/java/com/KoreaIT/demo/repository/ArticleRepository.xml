@@ -30,7 +30,7 @@
 	<update id="modifyArticle">
 		UPDATE article
 			<set>
-				SET updateDate = NOW(),
+				updateDate = NOW(),
 				<if test="title != null and title !=''">
 				title = #{title},				
 				</if>

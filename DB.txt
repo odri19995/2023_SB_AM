@@ -3,7 +3,6 @@ DROP DATABASE IF EXISTS SB_AM;
 CREATE DATABASE SB_AM;
 USE SB_AM;
 
-
 # article 테이블 생성
 CREATE TABLE article(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -13,6 +12,7 @@ CREATE TABLE article(
 	`body` TEXT NOT NULL
 );
 
+ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
 
 # member 테이블 생성
 CREATE TABLE `member`(
@@ -21,73 +21,72 @@ CREATE TABLE `member`(
 	updateDate DATETIME NOT NULL,
 	loginId VARCHAR(20) NOT NULL UNIQUE,
 	loginPw VARCHAR(100) NOT NULL,
-	`authLevel` SMALLINT UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한 레벨 ( 일반 = 3, 관리자 = 7)',
+	`authLevel` SMALLINT UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한 레벨 (일반 = 3, 관리자 = 7)',
 	`name` VARCHAR(20) NOT NULL,
 	nickname VARCHAR(20) NOT NULL,
 	cellphoneNum VARCHAR(20) NOT NULL,
 	email VARCHAR(50) NOT NULL,
-	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 =1)',
+	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
 	delDate DATETIME COMMENT '탈퇴 날짜'
 );
-
 
 # article 테스트 데이터
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+memberId = 2,
 title = '제목1',
 `body` = '내용1';
 
-
-
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+memberId = 1,
 title = '제목2',
 `body` = '내용2';
 
-
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+memberId = 2,
 title = '제목3',
 `body` = '내용3';
 
-
-#member 테스트 데이터 관리자
+# member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'admin',
 loginPw = 'admin',
-`authLevel` =7,
+`authLevel` = 7,
 `name` = '관리자',
 nickname = '관리자',
 cellphoneNum = '010-1111-1111',
 email = 'admin@naver.com';
 
-#member 테스트 데이터 유저
+# member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
-`name` = '유저 1',
-nickname = '유저 1',
-cellphoneNum = '010-1111-1113',
-email = 'user1@naver.com';
+`name` = '유저1',
+nickname = '유저1',
+cellphoneNum = '010-1112-1112',
+email = 'test1@naver.com';
 
+# member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
-`name` = '유저 2',
-nickname = '유저 2',
-cellphoneNum = '010-1111-1114',
-email = 'user2@naver.com';
-
+`name` = '유저2',
+nickname = '유저2',
+cellphoneNum = '010-1113-1113',
+email = 'test2@naver.com';
 
 SELECT * FROM article;
-
 SELECT * FROM `member`;
+
+SELECT LAST_INSERT_ID();
