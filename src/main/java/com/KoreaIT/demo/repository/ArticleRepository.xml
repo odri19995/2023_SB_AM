@@ -20,6 +20,7 @@
 			FROM article
 			WHERE id = #{id}
 	</select>
+
 	
 	<select id="getArticles" resultType="Article">
 		SELECT *

@@ -25,4 +25,6 @@ public interface ArticleRepository {
 
 	public void deleteArticle(int id);
 
+	public Article getArticleByMemberId(int memberId);
+
 }
