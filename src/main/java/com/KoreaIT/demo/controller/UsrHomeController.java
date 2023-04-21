@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UsrHomeController {
-	int i;
-	
-	public UsrHomeController() {
-		this.i = 0;
+
+	@RequestMapping("/usr/home/main")
+	public String showMain() {
+		return "usr/home/main";
 	}
-	@RequestMapping("/usr/home/main1")
-	@ResponseBody
-	public int showMain() {
-		return i++ ;
+	
+	@RequestMapping("/")
+	public String showRoot() {
+		return "redirect:/usr/home/main"; //요청을 다시 돌려보낸다. 
 	}
 }
