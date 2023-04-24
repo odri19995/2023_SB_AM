@@ -14,4 +14,8 @@ public class Article {
 	private int memberId;
 	private String title;
 	private String body;
+	
+	private String writerName;
+	//전역변수는 기본값이 false
+	private boolean actorCanChangeData;
 }
