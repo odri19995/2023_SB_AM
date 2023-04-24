@@ -8,23 +8,19 @@ import com.KoreaIT.demo.vo.Article;
 
 @Mapper
 public interface ArticleRepository {
-
-
-
-	// 서비스 메서드
-
+	
 	public void writeArticle(int memberId, String title, String body);
 	
 	public int getLastInsertId();
 
-	public Article getArticleById(int id) ;
-
+	public Article getArticleById(int id);
+	
 	public List<Article> getArticles();
 
 	public void modifyArticle(int id, String title, String body);
 
 	public void deleteArticle(int id);
 
-	public Article getArticleByMemberId(int memberId);
+	public Article getForPrintArticle(int id);
 
 }
