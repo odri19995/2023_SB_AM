@@ -31,11 +31,11 @@
 							</tr>
 							<tr>
 								<th>제목</th>
-								<td><input type="text" name="title" value="${article.title }" placeholder="제목을 입력해주세요"/></td>
+								<td><input type="text" name="title" value="${article.title }" placeholder="제목을 입력해주세요" class="input input-bordered input-primary w-full max-w-xs"/></td>
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea name="body" placeholder="내용을 입력해주세요">${article.body }</textarea></td>
+								<td><textarea name="body" placeholder="내용을 입력해주세요" class="input input-bordered input-primary w-full max-w-xs">${article.body }</textarea></td>
 							</tr>
 							<tr>
 								<td colspan="2"><button>수정</button></td>
