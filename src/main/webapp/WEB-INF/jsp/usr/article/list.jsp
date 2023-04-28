@@ -8,7 +8,7 @@
 				<div class="mb-2 flex justify-between items-end">
 					<div>
 						<div class="stat-title ">게시물수</div>
-						<div class="stat-value ">${articlesCnt }</div>
+						<div class="text-xl">${articlesCnt }</div>
 					</div>
 					<c:if test="${rq.getLoginedMemberId() != 0  }">
 							<a class="btn-text-link btn btn-active btn-ghost" href="write">WRITE</a>

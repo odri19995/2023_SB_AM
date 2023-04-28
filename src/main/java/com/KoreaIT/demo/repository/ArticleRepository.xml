@@ -3,7 +3,7 @@
 
 <mapper namespace="com.KoreaIT.demo.repository.ArticleRepository">
 
-<insert id="writeArticle">
+	<insert id="writeArticle">
 		INSERT INTO article
 			SET regDate = NOW(),
 				updateDate = NOW(),
@@ -47,6 +47,7 @@
 				AND boardId = #{boardId}
 			</if>
 			ORDER BY id DESC
+			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 	
 	<update id="modifyArticle">

@@ -2,12 +2,11 @@ package com.KoreaIT.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.demo.service.ArticleService;
@@ -69,7 +68,12 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
+	public String showList(Model model, @RequestParam(defaultValue= "1") int boardId,
+			@RequestParam(defaultValue= "1") int page) {
+		
+		if(page <=0) {
+			return rq.jsReturnOnView("페이지 번호가 존재하지 않습니다.",true);
+		}
 		
 		Board board = boardService.getBoardById(boardId);
 		
@@ -78,12 +82,19 @@ public class UsrArticleController {
 		}
 		
 		int articlesCnt = articleService.getArticlesCnt(boardId);
-		List<Article> articles = articleService.getArticles(boardId);
 		
+		int itemsInAPage = 10;
+		
+		int pagesCount = (int) Math.ceil((double) articlesCnt / itemsInAPage);
+		
+		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, page);
+
+		model.addAttribute("pagesCount", pagesCount);
+		model.addAttribute("page", page);
 		model.addAttribute("articlesCnt", articlesCnt);
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
-		
+
 		return "usr/article/list";
 	}
 	
