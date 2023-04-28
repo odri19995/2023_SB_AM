@@ -15,4 +15,7 @@ public interface BoardRepository {
 				AND delStatus = 0
 			""")
 	public Board getBoardById(int boardId);
+	
+	
+
 }
