@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UsrHomeController {
-
+	
 	@RequestMapping("/usr/home/main")
 	public String showMain() {
 		return "usr/home/main";
@@ -14,6 +14,7 @@ public class UsrHomeController {
 	
 	@RequestMapping("/")
 	public String showRoot() {
-		return "redirect:/usr/home/main"; //요청을 다시 돌려보낸다. 
+		return "redirect:/usr/home/main";
 	}
+	
 }
