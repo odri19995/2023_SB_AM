@@ -6,12 +6,31 @@
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
 			<form action="doWrite" method="POST">
+<!-- 			input 안의 name과 value가 넘어간다 -->
 				<div class="table-box-type-1">
 					<table class="table table-zebra w-full">
 						<colgroup>
 							<col width="200" />
 						</colgroup>
 						<tbody>
+							<tr>
+								<th>게시판</th>
+								<td>
+<!-- 									<select name ="boardId"> -->
+<!-- 										<option value="1">공지사항</option> -->
+<!-- 										<option value="2">자유게시판</option> -->
+<!-- 									</select> -->
+									<label>				
+										<input type="radio" name = "boardId" value = "1" checked/>
+										&nbsp;공지사항
+									</label>
+									&nbsp;&nbsp;&nbsp;	
+									<label>	
+										<input type="radio" name = "boardId" value = "2" />
+										&nbsp;자유 게시판
+									</label>
+								</td>
+							</tr>
 							<tr>
 								<th>제목</th>
 								<td><input class="input input-bordered w-full" type="text" name="title" placeholder="제목을 입력해주세요"/></td>

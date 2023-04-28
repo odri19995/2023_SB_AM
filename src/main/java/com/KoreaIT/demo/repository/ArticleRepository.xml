@@ -3,11 +3,12 @@
 
 <mapper namespace="com.KoreaIT.demo.repository.ArticleRepository">
 
-	<insert id="writeArticle">
+<insert id="writeArticle">
 		INSERT INTO article
 			SET regDate = NOW(),
 				updateDate = NOW(),
 				memberId = #{memberId},
+				boardId = #{boardId},
 				title = #{title},
 				`body` = #{body}
 	</insert>
@@ -31,11 +32,10 @@
 	</select>
 	
 	<select id="getArticlesCnt" resultType="int">
-		SELECT COUNT(*) 
+		SELECT COUNT(*)
 			FROM article
 			WHERE boardId = #{boardId}
 	</select>
-	
 	
 	<select id="getArticles" resultType="Article">
 		SELECT A.*, M.name AS writerName 
