@@ -19,6 +19,7 @@
 							<th>작성날짜</th>
 							<td>${article.regDate }</td>
 						</tr>
+						
 						<tr class="hover">
 							<th>수정날짜</th>
 							<td>${article.updateDate }</td>
@@ -34,6 +35,10 @@
 						<tr>
 							<th>내용</th>
 							<td>${article.body }</td>
+						</tr>
+						<tr class="hover">
+							<th>조회수</th>
+							<td>${article.hitCount }</td>
 						</tr>
 					</tbody>
 				</table>
