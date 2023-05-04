@@ -72,16 +72,16 @@ public class UsrArticleController {
 				}
 			}
 		}
-		
+		//서로 다른글 볼때 처리
 		if (oldCookie != null) {
 			if (!oldCookie.getValue().contains("[" + id + "]")) {
 				articleService.increaseHitCount(id);
 				oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
 				oldCookie.setPath("/");
-				oldCookie.setMaxAge(30 * 60);
+				oldCookie.setMaxAge(10);
 				resp.addCookie(oldCookie);
 			}
-		} else {
+		}else {
 			articleService.increaseHitCount(id);
 			Cookie newCookie = new Cookie("hitCount", "[" + id + "]");
 			newCookie.setPath("/");
