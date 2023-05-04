@@ -89,12 +89,12 @@
 							</otherwise>
 						</choose>
 					</if>
-					LIMIT #{limitStart}, #{itemsInAPage}
 					) AS AM
 	    	LEFT JOIN reactionPoint AS RP
 		    ON RP.relTypeCode = 'article'
 		    AND RP.relId = AM.id
 		    GROUP BY AM.id
+			LIMIT #{limitStart}, #{itemsInAPage}
 		    ORDER BY AM.id DESC
 	</select>
 	
