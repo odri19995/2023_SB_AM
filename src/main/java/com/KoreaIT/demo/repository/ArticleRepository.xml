@@ -24,11 +24,19 @@
 	</update>
 	
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT A.*, M.name AS writerName 
+		SELECT A.*
+				, M.name AS writerName
+				, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
+	            , IFNULL(SUM(IF(RP.point &gt; 0, RP.point, 0)), 0) AS goodReactionPoint
+	           	, IFNULL(SUM(IF(RP.point &lt; 0, RP.point, 0)), 0) AS badReactionPoint
 			FROM article AS A
 			INNER JOIN `member` AS M
 			ON A.memberId = M.id
+			LEFT JOIN reactionPoint AS RP
+			ON relTypeCode = 'article'
+			AND RP.relId = A.id
 			WHERE A.id = #{id}
+			GROUP BY A.id
 	</select>
 	
 	<select id="getArticleById" resultType="Article">
@@ -94,8 +102,8 @@
 		    ON RP.relTypeCode = 'article'
 		    AND RP.relId = AM.id
 		    GROUP BY AM.id
-			LIMIT #{limitStart}, #{itemsInAPage}
 		    ORDER BY AM.id DESC
+			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 	
 	<update id="modifyArticle">

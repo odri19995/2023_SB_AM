@@ -28,14 +28,29 @@
 							<td>${article.updateDate }</td>
 						</tr>
 						<tr>
+							<th>추천</th>
+							<td>
+								<c:if test="${rq.getLoginedMemberId() == 0 }">
+									<span class="badge">${article.sumReactionPoint }</span>
+								</c:if>
+								<c:if test="${rq.getLoginedMemberId() != 0 }">
+									<button class="btn btn-outline btn-xs">좋아요👍</button>
+									<span class="ml-2 badge">좋아요 : ${article.goodReactionPoint }개</span>
+									<br />
+									<button class="btn btn-outline btn-xs">싫어요👎</button>
+									<span class="ml-2 badge">싫어요 : ${article.badReactionPoint * -1 }개</span>
+								</c:if>
+							</td>
+						</tr>
+						<tr class="hover">
 							<th>작성자</th>
 							<td>${article.writerName }</td>
 						</tr>
-						<tr class="hover">
+						<tr>
 							<th>제목</th>
 							<td>${article.title }</td>
 						</tr>
-						<tr>
+						<tr class="hover">
 							<th>내용</th>
 							<td>${article.body }</td>
 						</tr>
