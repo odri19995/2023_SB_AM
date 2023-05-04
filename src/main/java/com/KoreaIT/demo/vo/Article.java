@@ -19,4 +19,7 @@ public class Article {
 	private String writerName;
 	//전역변수는 기본값이 false
 	private boolean actorCanChangeData;
+	private int sumReactionPoint;
+	private int goodReactionPoint;
+	private int badReactionPoint;
 }

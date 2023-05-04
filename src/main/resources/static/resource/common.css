@@ -23,6 +23,11 @@ html > body {
 	text-align: center;
 }
 
+.btn-text-link {
+	color:white;
+}
+
+
 .btn-text-link:hover {
 	color:olive;
 	text-decoration: underline;

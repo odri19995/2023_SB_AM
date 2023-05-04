@@ -9,6 +9,8 @@ public class ResultData<DT> {
 	private String msg;
 	private String data1Name;
 	private DT data1;
+	private String data2Name;
+	private Object data2;
 	
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
@@ -30,5 +32,10 @@ public class ResultData<DT> {
 	
 	public boolean isFail() {
 		return isSuccess() == false;
+	}
+
+	public void setData2(String data2Name, Object data2) {
+		this.data2Name = data2Name;
+		this.data2 = data2;
 	}
 }
