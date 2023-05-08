@@ -1,0 +1,24 @@
+package com.KoreaIT.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.KoreaIT.demo.repository.ReactionPointRepository;
+import com.KoreaIT.demo.vo.ReactionPoint;
+
+@Service
+public class ReactionPointService {
+
+	private ReactionPointRepository reactionPointRepository;
+
+	@Autowired
+	public ReactionPointService(ReactionPointRepository reactionPointRepository) {
+		this.reactionPointRepository = reactionPointRepository;
+	}
+
+	public ReactionPoint getReactionPoint(int loginedMemberId, int relId, String relTypeCode) {
+		return reactionPointRepository.getReactionPoint(loginedMemberId, relId, relTypeCode);
+	}
+
+
+}
