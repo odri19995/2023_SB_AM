@@ -1,5 +1,7 @@
 package com.KoreaIT.demo.repository;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,4 +20,26 @@ public interface ReactionPointRepository {
 			""")
 	ReactionPoint getReactionPoint(int loginedMemberId, int relId, String relTypeCode);
 
+	
+
+	@Insert("""
+			INSERT INTO reactionPoint
+				SET regDate = NOW(),
+					updateDate = NOW(),
+					memberId = #{loginedMemberId},
+					relTypeCode = #{relTypeCode},
+					relId = #{relId},
+					`point` = #{point}
+			""")
+	void doInsertReactionPoint(int loginedMemberId, int relId, String relTypeCode, int point);
+
+
+	@Delete("""
+			DELETE FROM reactionPoint
+				WHERE memberId = #{loginedMemberId},
+					relTypeCode = #{relTypeCode},
+					relId = #{relId},
+					`point` = #{point}
+			""")
+	void doDeleteReactionPoint(int loginedMemberId, int relId, String relTypeCode, int point);
 }

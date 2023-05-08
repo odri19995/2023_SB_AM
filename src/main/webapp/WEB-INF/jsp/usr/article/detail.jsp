@@ -5,6 +5,34 @@
 <%@ include file="../common/head.jsp" %>
 
 
+	<script>
+		function getReactionPoint(){
+			
+			$.get('../reactionPoint/getReactionPoint', {
+				relId : ${article.id},
+				relTypeCode : 'article'
+			}, function(data) {
+/* 				console.log($('#goodBtn'));
+				console.log(data); */
+				
+				if(data.data1.sumReactionPoint > 0){
+					let goodBtn = $('#goodBtn');
+					goodBtn.removeClass('btn-outline');
+				}else if (data.data1.sumReactionPoint<0){
+					let badBtn = $('#badBtn');
+					badBtn.removeClass('btn-outline');
+				}
+				
+			}, 'json');
+			
+		}
+		
+		$(function() {
+			getReactionPoint();
+		})
+	</script>
+
+
 
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
@@ -34,10 +62,10 @@
 									<span class="badge">${article.sumReactionPoint }</span>
 								</c:if>
 								<c:if test="${rq.getLoginedMemberId() != 0 }">
-									<button class="btn btn-outline btn-xs">좋아요👍</button>
+									<a id="goodBtn" class="btn btn-outline btn-xs" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=1">좋아요👍</a>
 									<span class="ml-2 badge">좋아요 : ${article.goodReactionPoint }개</span>
 									<br />
-									<button class="btn btn-outline btn-xs">싫어요👎</button>
+									<a id="badBtn" class="btn btn-outline btn-xs" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=-1">싫어요👎</a>
 									<span class="ml-2 badge">싫어요 : ${article.badReactionPoint * -1 }개</span>
 								</c:if>
 							</td>

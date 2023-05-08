@@ -13,3 +13,11 @@ rq 객체에서 컨트롤러는 요청을 꺼내쓴다.
 
 
 request mapping에 getmapping과 post mapping이 합쳐진 것이다. 
+
+
+
+attr()
+- element 가 가지는 속성값이나 정보를 조회하고 세팅
+
+prop(checked, disabled, selected)
+- element 가 가지는 실질적인 상태를 제어할때 
