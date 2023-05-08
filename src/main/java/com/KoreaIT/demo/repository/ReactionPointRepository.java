@@ -34,12 +34,12 @@ public interface ReactionPointRepository {
 	void doInsertReactionPoint(int loginedMemberId, int relId, String relTypeCode, int point);
 
 
+
 	@Delete("""
 			DELETE FROM reactionPoint
-				WHERE memberId = #{loginedMemberId},
-					relTypeCode = #{relTypeCode},
-					relId = #{relId},
-					`point` = #{point}
+				WHERE memberId = #{loginedMemberId}
+				AND relTypeCode = #{relTypeCode}
+				AND relId = #{relId}
 			""")
-	void doDeleteReactionPoint(int loginedMemberId, int relId, String relTypeCode, int point);
+	void doDeleteReactionPoint(int loginedMemberId, int relId, String relTypeCode);
 }
