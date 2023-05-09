@@ -21,3 +21,9 @@ attr()
 
 prop(checked, disabled, selected)
 - element 가 가지는 실질적인 상태를 제어할때 
+
+댓글 테이블 생성
+폼 제작
+기능 구현
+
+댓글 수정, 삭제

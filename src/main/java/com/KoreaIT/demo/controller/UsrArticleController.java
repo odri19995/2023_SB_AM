@@ -58,6 +58,17 @@ public class UsrArticleController {
 
 		return Util.jsReplace(Util.f("%d번 게시물이 생성되었습니다", id), Util.f("detail?id=%d", id));
 	}
+	
+	@RequestMapping("/usr/article/doWriteComment")
+	@ResponseBody
+	public String doWriteComment(int relId, String comment) {
+		if (Util.empty(comment)) {
+			return Util.jsHistoryBack("댓글을 입력해주세요");
+		}
+		
+		return Util.jsReplace(Util.f("%d번글에 댓글이 작성되었습니다", relId), Util.f("detail?id=%d", relId));
+	}
+	
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, HttpServletResponse resp, Model model, int id) {
