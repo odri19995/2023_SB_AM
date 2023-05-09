@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.demo.service.ArticleService;
 import com.KoreaIT.demo.service.BoardService;
+import com.KoreaIT.demo.service.ReplyService;
 import com.KoreaIT.demo.util.Util;
 import com.KoreaIT.demo.vo.Article;
 import com.KoreaIT.demo.vo.Board;
+import com.KoreaIT.demo.vo.Reply;
 import com.KoreaIT.demo.vo.ResultData;
 import com.KoreaIT.demo.vo.Rq;
 
@@ -26,12 +28,14 @@ public class UsrArticleController {
 
 	private ArticleService articleService;
 	private BoardService boardService;
+	private ReplyService replyService;
 	private Rq rq;
 
 	@Autowired
-	public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, Rq rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
+		this.replyService = replyService;
 		this.rq = rq;
 	}
 
@@ -58,17 +62,6 @@ public class UsrArticleController {
 
 		return Util.jsReplace(Util.f("%d번 게시물이 생성되었습니다", id), Util.f("detail?id=%d", id));
 	}
-	
-	@RequestMapping("/usr/article/doWriteComment")
-	@ResponseBody
-	public String doWriteComment(int relId, String comment) {
-		if (Util.empty(comment)) {
-			return Util.jsHistoryBack("댓글을 입력해주세요");
-		}
-		
-		return Util.jsReplace(Util.f("%d번글에 댓글이 작성되었습니다", relId), Util.f("detail?id=%d", relId));
-	}
-	
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, HttpServletResponse resp, Model model, int id) {
@@ -83,16 +76,16 @@ public class UsrArticleController {
 				}
 			}
 		}
-		//서로 다른글 볼때 처리
+		
 		if (oldCookie != null) {
 			if (!oldCookie.getValue().contains("[" + id + "]")) {
 				articleService.increaseHitCount(id);
 				oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
 				oldCookie.setPath("/");
-				oldCookie.setMaxAge(10);
+				oldCookie.setMaxAge(30 * 60);
 				resp.addCookie(oldCookie);
 			}
-		}else {
+		} else {
 			articleService.increaseHitCount(id);
 			Cookie newCookie = new Cookie("hitCount", "[" + id + "]");
 			newCookie.setPath("/");
@@ -100,11 +93,14 @@ public class UsrArticleController {
 			resp.addCookie(newCookie);
 		}
 		
+		List<Reply> replies = replyService.getReplies("article", id);
+		
 		Article article = articleService.getForPrintArticle(id);
 
 		articleService.actorCanChangeData(rq.getLoginedMemberId(), article);
 
 		model.addAttribute("article", article);
+		model.addAttribute("replies", replies);
 
 		return "usr/article/detail";
 	}
