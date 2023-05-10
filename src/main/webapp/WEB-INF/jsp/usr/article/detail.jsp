@@ -38,8 +38,8 @@
 
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3 pb-5 border-bottom-line">
-			<div class="table w-full">
-				<table>
+			<div class="table-box-type-1">
+				<table class="table">
 					<colgroup>
 						<col width="200" />
 					</colgroup>
@@ -86,7 +86,7 @@
 						</tr>
 						<tr class="hover">
 							<th>내용</th>
-							<td>${article.body }</td>
+							<td>${article.getForPrintBody() }</td>
 						</tr>
 						<tr class="hover">
 							<th>조회수</th>
@@ -106,32 +106,29 @@
 		</div>
 	</section>
 	
-	<section class="mt-5 text-xl mb-5">
+	<section class="my-5 text-xl">
 		<div class="container mx-auto px-3">
 			<h2>댓글</h2>
 			<c:forEach var="reply" items="${replies }" >
 				<div class="py-2 pl-16 border-bottom-line text-base">
 					<div class="font-semibold"><span>${reply.writerName }</span></div>
-					<div class="my-1 text-lg pl-2"><span>${reply.body }</span></div>
+					<div class="my-1 text-lg pl-2"><span>${reply.getForPrintBody() }</span></div>
 					<div class="text-xs text-gray-400"><span>${reply.updateDate }</span></div>
 				</div>
 			</c:forEach>
-			<form action="../reply/doWrite" method="POST" onsubmit="replyWrite_submitForm(this); return false;">
-				<input type="hidden" name="relTypeCode" value="article" />
-				<input type="hidden" name="relId" value="${article.id }" />
-				<div class="mt-4 border border-gray-400 rounded-lg text-base p-4">
-					<div class="mb-2"><span>닉네임</span></div>
-					<textarea class="textarea textarea-bordered w-full" name="body" placeholder="댓글을 남겨보세요"></textarea>
-					<div class="flex justify-end"><button class="btn-text-link btn btn-active btn-sm">등록</button></div>
-				</div>
-			</form>
-		</div>
-	</section>
-		
-		
-		
-		
-			</form>
+			<c:if test="${rq.getLoginedMemberId() != 0 }">
+				<form action="../reply/doWrite" method="POST" onsubmit="replyWrite_submitForm(this); return false;">
+					<input type="hidden" name="relTypeCode" value="article" />
+					<input type="hidden" name="relId" value="${article.id }" />
+					<div class="mt-4 border border-gray-400 rounded-lg text-base p-4">
+						<div class="mb-2"><span>${rq.getLoginedMember().getNickname() }</span></div>
+<!-- 						밑의 방식으로도 가능함 -->
+<%-- 						<div class="mb-2"><span>${rq.loginedMember.nickname }</span></div> --%>
+						<textarea class="textarea textarea-bordered w-full" name="body" placeholder="댓글을 남겨보세요"></textarea>
+						<div class="flex justify-end"><button class="btn-text-link btn btn-active btn-sm">등록</button></div>
+					</div>
+				</form>
+			</c:if>
 		</div>
 	</section>
 	
