@@ -56,6 +56,7 @@ public class ArticleService {
 			return ResultData.from("F-B", "해당 게시물에 대한 권한이 없습니다");	
 		}
 		
+		
 		return ResultData.from("S-1", "가능");
 	}
 

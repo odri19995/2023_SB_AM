@@ -18,6 +18,7 @@ public class Reply {
 	
 	
 	private String writerName;
+	private boolean actorCanChangeData;
 	
 
 	public String getForPrintBody() {
