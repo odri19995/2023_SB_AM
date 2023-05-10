@@ -27,3 +27,8 @@ prop(checked, disabled, selected)
 기능 구현
 
 댓글 수정, 삭제
+
+
+
+제이쿼리 html(), append()
+jstl > forEach > varStatus

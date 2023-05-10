@@ -2,6 +2,7 @@ package com.KoreaIT.demo.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -37,4 +38,19 @@ public interface ReplyRepository {
 				ORDER BY R.id;
 			""")
 	public List<Reply> getReplies(String relTypeCode, int relId);
+	
+	
+
+	@Select("""
+			SELECT *
+				FROM reply
+				WHERE id = #{id}
+			""")
+	public Reply getReply(int id);
+
+	@Delete("""
+			DELETE FROM reply
+				WHERE id = #{id}
+			""")
+	public void deleteReply(int id);
 }
