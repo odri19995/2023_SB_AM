@@ -3,10 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="Write" />
 <%@ include file="../common/head.jsp" %>
+<%@ include file="../common/toastUiEditorLib.jsp" %>
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
-			<form action="doWrite" method="POST">
-<!-- 			input 안의 name과 value가 넘어간다 -->
+			<form action="doWrite" method="POST" onsubmit="submitForm(this); return false;">
+				<input type="hidden" name="body" />
 				<div class="table-box-type-1">
 					<table class="table table-zebra w-full">
 						<colgroup>
@@ -16,18 +17,14 @@
 							<tr>
 								<th>게시판</th>
 								<td>
-<!-- 									<select name ="boardId"> -->
-<!-- 										<option value="1">공지사항</option> -->
-<!-- 										<option value="2">자유게시판</option> -->
-<!-- 									</select> -->
-									<label>				
-										<input type="radio" name = "boardId" value = "1" checked/>
+									<label>
+										<input type="radio" name="boardId" value="1" checked/>
 										&nbsp;공지사항
 									</label>
-									&nbsp;&nbsp;&nbsp;	
-									<label>	
-										<input type="radio" name = "boardId" value = "2" />
-										&nbsp;자유 게시판
+									&nbsp;&nbsp;&nbsp;
+									<label>
+										<input type="radio" name="boardId" value="2"/>
+										&nbsp;자유
 									</label>
 								</td>
 							</tr>
@@ -37,17 +34,21 @@
 							</tr>
 							<tr>
 								<th>내용</th>
-								<td><textarea class="textarea textarea-bordered w-full" name="body" placeholder="내용을 입력해주세요"></textarea></td>
+								<td>
+									<div class="toast-ui-editor">
+      									<script type="text/x-template"></script>
+    								</div>
+								</td>
 							</tr>
 							<tr>
-								<td colspan="2"><button class="btn-text-link btn btn-active btn-ghost">작성</button></td>
+								<td colspan="2"><button class="btn-text-link btn btn-active">작성</button></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</form>
 			<div class="btns mt-2">
-				<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
+				<button class="btn-text-link btn btn-active" type="button" onclick="history.back();">뒤로가기</button>
 			</div>
 		</div>
 	</section>
