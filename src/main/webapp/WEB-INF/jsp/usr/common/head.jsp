@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
+<!-- 파비콘 불러오기 -->
+<link rel="shortcut icon" href="/resource/image/favicon.ico" />
 <!-- 테일윈드 불러오기 -->
 <!-- 노말라이즈, 라이브러리 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" />
@@ -32,6 +34,7 @@
 			</c:if>
 			<c:if test="${rq.getLoginedMemberId() == 0 }">
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/login"><span>LOGIN</span></a></li>
+				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/join"><span>JOIN</span></a></li>
 			</c:if>
 			<c:if test="${rq.getLoginedMemberId() != 0  }">
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/doLogout"><span>LOGOUT</span></a></li>

@@ -25,7 +25,4 @@ public class Article {
 	
 	
 
-	public String getForPrintBody() {
-		return this.body.replaceAll("\n", "<br />");
-	}
 }
