@@ -11,18 +11,22 @@
 			<div>
 				안녕하세요
 			</div>
-		</div>
-		<div class = "flex justify-center">
-			<div class="card w-96 bg-base-100 shadow-xl">	
-			  <figure ><img src="/resource/image/shoes.jpg" /></figure>
-			  	<div class="card-body">
-			    	<h2 class="card-title">Shoes!</h2>
-			    		<p>If a dog chews shoes whose shoes does he choose?</p>
-			    		<div class="card-actions justify-end">
-			      <button class="btn btn-primary">Buy Now</button>
-			    </div>
-			  </div>
+			<div><img src="/resource/image/shoes.jpg"/></div>
+			<span class="modal-exam">모달예시</span>
+			<br />
+			<span class="popUp-exam">팝업예시</span>
+			
+			
+			<div class="layer-bg"></div>
+			<div class="layer">
+				<h1>MODAL</h1>
+				<span class="close-x-btn">&times;</span>
+				<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero aut ab atque porro aliquid consequuntur tempore! Consequatur magnam explicabo placeat quos commodi quam ad odit voluptatum culpa tempora necessitatibus quo?</div>
+				<button class="close-btn btn btn-active">CLOSE</button>				
 			</div>
+			
+			
+			
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>

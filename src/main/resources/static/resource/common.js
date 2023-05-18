@@ -1,5 +1,5 @@
 $('select[data-value]').each(function(index, item){
-//select 태그의 data-value를 찾아서 요소를 하나씩 순회한다. each 함수안에 함수가 있다.
+	
 	const items = $(item);
 	
 	const defaultValue = items.attr('data-value').trim();
@@ -7,6 +7,34 @@ $('select[data-value]').each(function(index, item){
 	if (defaultValue.length > 0) {
 		items.val(defaultValue);
 	}
-	
-	//아이템에 defaultvalue를 세팅
+})
+
+$('.modal-exam').click(function(){
+	$('.layer-bg').show();
+	$('.layer').show();
+//	$('.layer-bg, .layer').css('display', 'block');
+})
+
+$('.layer-bg').click(function(){
+	$('.layer-bg').hide();
+	$('.layer').hide();
+//	$('.layer-bg, .layer').css('display', 'none');
+})
+
+$('.close-btn').click(function(){
+	$('.layer-bg').hide();
+	$('.layer').hide();
+//	$('.layer-bg, .layer').css('display', 'none');
+})
+
+$('.close-x-btn').click(function(){
+	$('.layer-bg').hide();
+	$('.layer').hide();
+//	$('.layer-bg, .layer').css('display', 'none');
+})
+
+$('.popUp-exam').click(function(){
+	let popOption = "width=650px, height=550px, top=100px, left=100px, scrollbars=yes";
+	let openUrl = '/usr/home/popUp';
+	window.open(openUrl, 'pop', popOption);
 })
