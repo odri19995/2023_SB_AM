@@ -53,7 +53,7 @@ public class UsrMemberController {
 			return Util.jsHistoryBack("이메일을 입력해주세요");
 		}
 		
-		ResultData<Integer> doJoinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData<Integer> doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, cellphoneNum, email);
 		
 		if (doJoinRd.isFail()) {
 			return Util.jsHistoryBack(doJoinRd.getMsg());
@@ -105,7 +105,7 @@ public class UsrMemberController {
 			return Util.jsHistoryBack(Util.f("%s은(는) 존재하지 않는 아이디입니다", loginId));
 		}
 		
-		if (member.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(Util.sha256(loginPw)) == false) {
 			return Util.jsHistoryBack("비밀번호가 일치하지 않습니다");
 		}
 
@@ -140,7 +140,7 @@ public class UsrMemberController {
 			return rq.jsReturnOnView("비밀번호를 입력해주세요", true);
 		}
 		
-		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
+		if (rq.getLoginedMember().getLoginPw().equals(Util.sha256(loginPw)) == false) {
 			return rq.jsReturnOnView("비밀번호가 일치하지 않습니다", true);
 		}
 		
@@ -189,7 +189,7 @@ public class UsrMemberController {
 			return Util.jsHistoryBack("비밀번호가 일치하지 않습니다");
 		}
 		
-		memberService.doPasswordModify(rq.getLoginedMemberId(), loginPw);
+		memberService.doPasswordModify(rq.getLoginedMemberId(), Util.sha256(loginPwChk));
 		
 		return Util.jsReplace("비밀번호가 수정되었습니다", "myPage");
 	}

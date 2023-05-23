@@ -11,6 +11,19 @@ CREATE TABLE article(
 	title VARCHAR(100) NOT NULL,
 	`body` TEXT NOT NULL
 );
+# DB 삭제/생성/사용
+DROP DATABASE IF EXISTS SB_AM;
+CREATE DATABASE SB_AM;
+USE SB_AM;
+
+# article 테이블 생성
+CREATE TABLE article(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	`body` TEXT NOT NULL
+);
 
 ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
 ALTER TABLE article ADD COLUMN boardId INT UNSIGNED NOT NULL AFTER memberId;
@@ -55,7 +68,7 @@ CREATE TABLE reactionPoint(
     relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
 	`point` SMALLINT NOT NULL DEFAULT 0
 );
-DROP TABLE reply
+
 # reply 테이블 생성
 CREATE TABLE reply(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -97,7 +110,7 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'admin',
-loginPw = 'admin',
+loginPw = SHA2('admin', 256),
 `authLevel` = 7,
 `name` = '관리자',
 nickname = '관리자',
@@ -109,7 +122,7 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test1',
-loginPw = 'test1',
+loginPw = SHA2('test1', 256),
 `name` = '유저1',
 nickname = '유저1',
 cellphoneNum = '010-1112-1112',
@@ -120,7 +133,7 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
-loginPw = 'test2',
+loginPw = SHA2('test2', 256),
 `name` = '유저2',
 nickname = '유저2',
 cellphoneNum = '010-1113-1113',
@@ -186,6 +199,14 @@ relTypeCode = 'article',
 relId = 3,
 `point` = 1;
 
+# 2번 회원이 1번 게시물에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = '댓글 1';
 
 # 2번 회원이 3번 게시물에 댓글
 INSERT INTO reply
@@ -194,7 +215,7 @@ updateDate = NOW(),
 memberId = 2,
 relTypeCode = 'article',
 relId = 3,
-`body` = 'wow!'
+`body` = '댓글 2';
 
 # 3번 회원이 1번 게시물에 댓글
 INSERT INTO reply
@@ -203,21 +224,23 @@ updateDate = NOW(),
 memberId = 3,
 relTypeCode = 'article',
 relId = 1,
-`body` = 'great'
+`body` = '댓글 3';
 
+# 3번 회원이 1번 게시물에 댓글
 INSERT INTO reply
 SET regDate = NOW(),
 updateDate = NOW(),
-memberId = 2,
+memberId = 3,
 relTypeCode = 'article',
 relId = 1,
-`body` = 'wows!'
+`body` = '댓글 4';
 
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 SELECT * FROM reply;
+
 SELECT LAST_INSERT_ID();
 
 /* 게시물 늘리기 쿼리
@@ -225,74 +248,11 @@ insert into article
 (
     regDate, updateDate, memberId, boardId, title, `body`
 )
-select now(), now(), FLOOR(RAND() * 3) + 1, FLOOR(RAND() * 2) + 1, CONCAT('제목_', rand()), CONCAT('내용_', RAND())
+select now(), now(), FLOOR(RAND() * 3) + 1, FLOOR(RAND() * 2) + 1, CONcat('제목_', rand()), CONCAT('내용_', RAND())
 from article;
 */
 
-
-
 SELECT COUNT(*) FROM article;
-#ifnull 안의 값이 null이면 0으로 바꿔준다.
 
-
-SELECT * FROM reactionPoint;
-
-SELECT AM.*
-	,IFNULL(SUM(RP.point), 0) AS sumReactionPoint
-	,IFNULL(SUM(IF(RP.point >0,RP.point, 0)),0) AS goodReactionPoint
-	,IFNULL(SUM(IF(RP.point <0,RP.point, 0)),0) AS badReactionPoint
-	FROM(
-		SELECT A.*, M.name AS writerName 
-			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
-	) AS AM
-	LEFT JOIN reactionPoint AS RP
-	ON RP.relTypeCode = 'article'
-	AND RP.relId = AM.id
-	GROUP BY AM.id
-	
-	
-SELECT A.*
-            	, M.name AS writerName
-            	, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
-            	, IFNULL(SUM(IF(RP.point > 0, RP.point, 0)), 0) AS goodReactionPoint
-           		, IFNULL(SUM(IF(RP.point < 0, RP.point, 0)), 0) AS badReactionPoint
-            FROM article AS A
-            INNER JOIN `member` AS M
-            ON A.memberId = M.id
-            LEFT JOIN reactionPoint AS RP
-            ON RP.relTypeCode = 'article'
-            AND RP.relId = A.id
-		    GROUP BY A.id
-
-
-#with as
-WITH AM AS (
-	SELECT A.*, M.name AS writerName 
-		FROM article AS A
-		INNER JOIN `member` AS M
-		ON A.memberId = M.id
-)
-
-SELECT A.*
-			, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
-            , IFNULL(SUM(IF(RP.point > 0, RP.point, 0)), 0) AS goodReactionPoint
-           	, IFNULL(SUM(IF(RP.point < 0, RP.point, 0)), 0) AS badReactionPoint
-			FROM AM
-			LEFT JOIN reactionPoint AS rp
-			ON RP.relTypeCode = 'article'
-            AND RP.relId = A.id
-		    GROUP BY A.id
-		    
-
-		SELECT A.*, M.name AS writerName 
-			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
-			LEFT JOIN reactionPoint AS rp
-			ON RP.relTypeCode = 'article'
-            AND RP.relId = A.id
-            WHERE A.id =1
-
-		   
+UPDATE `member`
+SET loginPw = SHA2(loginPw, 256);
