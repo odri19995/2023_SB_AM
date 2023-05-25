@@ -1,6 +1,7 @@
 package com.KoreaIT.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.demo.repository.MemberRepository;
@@ -11,11 +12,19 @@ import com.KoreaIT.demo.vo.ResultData;
 @Service
 public class MemberService {
 	
+	@Value("${custom.siteName}")
+	private String siteName;
+	@Value("${custom.siteMainUri}")
+	private String siteMainUri;
+
+	
 	private MemberRepository memberRepository;
+	private MailService mailService;
 	
 	@Autowired
-	public MemberService(MemberRepository memberRepository) {
+	public MemberService(MemberRepository memberRepository , MailService mailService) {
 		this.memberRepository = memberRepository;
+		this.mailService = mailService;
 	}
 	
 	public ResultData<Integer> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
@@ -43,7 +52,7 @@ public class MemberService {
 		return ResultData.from("S-1", Util.f("%s회원님이 가입되었습니다", loginId), "id", memberRepository.getLastInsertId());
 	}
 	
-	private Member getMemberByNameAndEmail(String name, String email) {
+	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
@@ -65,6 +74,28 @@ public class MemberService {
 
 	public void doPasswordModify(int loginedMemberId, String loginPw) {
 		memberRepository.doPasswordModify(loginedMemberId, loginPw);
+	}
+	
+	public ResultData notifyTempLoginPwByEmail(Member member) {
+
+		String title = "[" + siteName + "] 임시 패스워드 발송";
+		String tempPassword = Util.getTempPassword(8);
+		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+		body += "<a style='font-size:4rem;' href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
+
+		ResultData sendRd = mailService.send(member.getEmail(), title, body);
+
+		if (sendRd.isFail()) {
+			return sendRd;
+		}
+
+		setTempPassword(member, tempPassword);
+
+		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다");
+	}
+
+	private void setTempPassword(Member member, String tempPassword) {
+		memberRepository.doPasswordModify(member.getId(), Util.sha256(tempPassword));
 	}
 	
 }

@@ -1,6 +1,17 @@
 server:
   port: 8081
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: odri19995@gmail.com # 보내는 곳
+    password: #smtp <GENERATED_PASSWORD>
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -11,4 +22,9 @@ spring:
     username: root
     password: 
 mybatis:
-  type-aliases-package: com.KoreaIT.demo.vo
+  type-aliases-package: com.koreaIT.demo.vo
+custom:
+  siteName: 2023_04_SB_AM
+  siteMainUri: http://localhost:8081
+  emailFrom: no-reply@localhost
+  emailFromName: 2023_04_SB_AM
