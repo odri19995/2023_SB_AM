@@ -25,6 +25,16 @@
 				<button class="close-btn btn btn-active">CLOSE</button>				
 			</div>
 			
+			<div>
+				<form action="upload" method="POST" enctype="multipart/form-data">
+					<input type="file" name="file" />
+					<button>업로드</button>
+				</form>
+			</div>
+			
+			<div>
+				<a href="/usr/home/view">파일보러가기</a>
+			</div>
 			
 			
 		</div>

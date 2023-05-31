@@ -11,19 +11,6 @@ CREATE TABLE article(
 	title VARCHAR(100) NOT NULL,
 	`body` TEXT NOT NULL
 );
-# DB 삭제/생성/사용
-DROP DATABASE IF EXISTS SB_AM;
-CREATE DATABASE SB_AM;
-USE SB_AM;
-
-# article 테이블 생성
-CREATE TABLE article(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL,
-	title VARCHAR(100) NOT NULL,
-	`body` TEXT NOT NULL
-);
 
 ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
 ALTER TABLE article ADD COLUMN boardId INT UNSIGNED NOT NULL AFTER memberId;
@@ -80,6 +67,15 @@ CREATE TABLE reply(
 	`body` TEXT NOT NULL
 );
 
+# file 테이블 생성
+CREATE TABLE `file`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+    originName VARCHAR(50) NOT NULL,
+    savedName VARCHAR(100) NOT NULL,
+    savedPath VARCHAR(100) NOT NULL
+);
+
 # article 테스트 데이터
 INSERT INTO article
 SET regDate = NOW(),
@@ -133,7 +129,7 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
-loginPw = SHA2('test2', 256),
+loginPw = sha2('test2', 256),
 `name` = '유저2',
 nickname = '유저2',
 cellphoneNum = '010-1113-1113',
@@ -254,5 +250,9 @@ from article;
 
 SELECT COUNT(*) FROM article;
 
-UPDATE `member`
-SET loginPw = SHA2(loginPw, 256);
+update `member`
+set loginPw = sha2(loginPw, 256);
+
+update `member`
+set email = 'http-@naver.com'
+where id = 2
