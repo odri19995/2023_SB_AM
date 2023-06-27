@@ -1,5 +1,7 @@
 package com.KoreaIT.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import com.KoreaIT.demo.util.Util;
 import com.KoreaIT.demo.vo.Member;
 import com.KoreaIT.demo.vo.ResultData;
 
+
 @Service
 public class MemberService {
 	
@@ -16,13 +19,12 @@ public class MemberService {
 	private String siteName;
 	@Value("${custom.siteMainUri}")
 	private String siteMainUri;
-
 	
 	private MemberRepository memberRepository;
 	private MailService mailService;
 	
 	@Autowired
-	public MemberService(MemberRepository memberRepository , MailService mailService) {
+	public MemberService(MemberRepository memberRepository, MailService mailService) {
 		this.memberRepository = memberRepository;
 		this.mailService = mailService;
 	}
@@ -75,7 +77,7 @@ public class MemberService {
 	public void doPasswordModify(int loginedMemberId, String loginPw) {
 		memberRepository.doPasswordModify(loginedMemberId, loginPw);
 	}
-	
+
 	public ResultData notifyTempLoginPwByEmail(Member member) {
 
 		String title = "[" + siteName + "] 임시 패스워드 발송";
@@ -96,6 +98,32 @@ public class MemberService {
 
 	private void setTempPassword(Member member, String tempPassword) {
 		memberRepository.doPasswordModify(member.getId(), Util.sha256(tempPassword));
+	}
+
+	public int getMembersCnt(String authLevel, String searchKeywordType, String searchKeyword) {
+		return memberRepository.getMembersCnt(authLevel, searchKeywordType, searchKeyword);
+	}
+
+	public List<Member> getMembers(String authLevel, String searchKeywordType, String searchKeyword, int itemsInAPage,
+			int page) {
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return memberRepository.getMembers(authLevel, searchKeywordType, searchKeyword, itemsInAPage, limitStart);
+	}
+
+	public void deleteMembers(List<Integer> memberIds) {
+		for (int memberId : memberIds) {
+			Member member = getMemberById(memberId);
+			
+			if (member != null) {
+				deleteMember(member);
+			}
+		}
+	}
+
+	private void deleteMember(Member member) {
+		memberRepository.deleteMember(member.getId());
 	}
 	
 }
